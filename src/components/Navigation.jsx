@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Navigation extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -12,8 +9,8 @@ class Navigation extends Component {
 
                 <div className="search-wrap">
                     <div className="container">
-                        <a href="#" className="search-close js-search-close"><span className="icon-close2"></span></a>
-                        <form action="#" method="post">
+                        <a href="!#" className="search-close js-search-close"><span className="icon-close2"></span></a>
+                        <form action="!#" method="post">
                             <input type="text" className="form-control" placeholder="Search keyword and hit enter..."></input>
                         </form>
                     </div>
@@ -45,14 +42,14 @@ class Navigation extends Component {
                             </nav>
                         </div>
                         <div className="icons">
-                            <a href="#" className="icons-btn d-inline-block js-search-open"><span className="icon-search"></span></a>
+                            <a href="!#" className="icons-btn d-inline-block js-search-open"><span className="icon-search"></span></a>
 
                             <Link to="/cart" className="icons-btn d-inline-block bag">
                                 <span className="icon-shopping-bag"></span>
                                 <span className="number">2</span>
                             </Link>
 
-                            <a href="#" className="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span className="icon-menu"></span></a>
+                            <a href="!#" className="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span className="icon-menu"></span></a>
                         </div>
                     </div>
                 </div>

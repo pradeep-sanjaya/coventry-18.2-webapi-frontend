@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
-class Products extends Component {
+import TopBanner from "./TopBanner";
+
+class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Products</h1>
+                <TopBanner></TopBanner>
             </div>
         );
     }
 }
 
-export default Products;
+export default Home;
