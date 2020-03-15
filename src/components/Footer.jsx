@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Footer extends Component {
     render() {
@@ -21,7 +22,7 @@ class Footer extends Component {
                                 <div className="col-md-6 col-lg-6">
                                     <ul className="list-unstyled">
                                         <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Contact</a></li>
+                                        <li><Link to="/contact">Contact</Link></li>
                                     </ul>
                                 </div>
                             </div>
