@@ -3,36 +3,27 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./store/reducers";
-
+import reduxthunk from "redux-thunk";
+import getProducts from "./services/product";
 const store = createStore(
   rootReducer,
   {
-    products: [
-      {
-        name: "Zayden XL",
-        price: 3000,
-        in_stock: true
-      },
-      {
-        name: "iNippa DC",
-        price: 5000,
-        in_stock: true
-      },
-      {
-        name: "Corona Pakaya",
-        price: 1400,
-        in_stock: false
-      }
-    ],
+    products: [],
     user: "heshan",
     cart: []
   },
-  window.devToolsExtension && window.devToolsExtension()
+  compose(
+    applyMiddleware(reduxthunk),
+    window["__REDUX_DEVTOOLS_EXTENSION__"]
+      ? window["__REDUX_DEVTOOLS_EXTENSION__"]()
+      : (f) => f
+  )
 );
 
+store.dispatch(getProducts());
 ReactDOM.render(
   <Provider store={store}>
     <App />

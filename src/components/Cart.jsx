@@ -20,7 +20,7 @@ class Cart extends Component {
               >
                 <img
                   className="card-img-top"
-                  src="https://d2fzf9bbqh0om5.cloudfront.net/images/12553/original/mens-clothing.png?1564863637"
+                  src={product.image}
                   alt="Card image cap"
                 />
                 <div className="card-body">

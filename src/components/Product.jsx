@@ -18,12 +18,12 @@ class Product extends Component {
           <div className="card" style={{ width: "18em", margin: "15px" }}>
             <img
               className="card-img-top"
-              src="https://d2fzf9bbqh0om5.cloudfront.net/images/12553/original/mens-clothing.png?1564863637"
+              src={this.props.product.image}
               alt="Card image cap"
             />
             <div className="card-body">
               <h5 className="card-title">{this.props.product.name}</h5>
-              {this.props.product.in_stock ? (
+              {this.props.product.isAvailable ? (
                 <a href="#" className="badge badge-primary">
                   In Stock
                 </a>
