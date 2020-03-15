@@ -8,6 +8,7 @@ import Cart from "./components/Cart.jsx";
 import ProductDetails from "./components/ProductDetails";
 import NewArrivals from "./components/NewArrivals";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/product/:id" component={ProductDetails}></Route>
           <Route exact path="/new-arrivals" component={NewArrivals}></Route>
           <Route exact path="/contact" component={Contact}></Route>
+          <Footer />
         </React.Fragment >
       </BrowserRouter >
     </div>
