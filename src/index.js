@@ -8,27 +8,29 @@ import { Provider } from "react-redux";
 import rootReducer from "./store/reducers";
 import reduxthunk from "redux-thunk";
 import getProducts from "./services/product";
+
 const store = createStore(
-  rootReducer,
-  {
-    products: [],
-    user: "heshan",
-    cart: []
-  },
-  compose(
-    applyMiddleware(reduxthunk),
-    window["__REDUX_DEVTOOLS_EXTENSION__"]
-      ? window["__REDUX_DEVTOOLS_EXTENSION__"]()
-      : (f) => f
-  )
+    rootReducer,
+    {
+        products: [],
+        user: "heshan",
+        cart: []
+    },
+    compose(
+        applyMiddleware(reduxthunk),
+        window["__REDUX_DEVTOOLS_EXTENSION__"]
+            ? window["__REDUX_DEVTOOLS_EXTENSION__"]()
+            : (f) => f
+    )
 );
 
 store.dispatch(getProducts());
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById("root")
 );
 
 serviceWorker.unregister();
