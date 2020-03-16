@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Navigation extends Component {
 
@@ -38,6 +39,9 @@ class Navigation extends Component {
                                     <li>
                                         <Link to="/contact">Contact</Link>
                                     </li>
+                                    <li>
+                                        <Link to="#">Welcome | {this.props.user}</Link>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -46,7 +50,7 @@ class Navigation extends Component {
 
                             <Link to="/cart" className="icons-btn d-inline-block bag">
                                 <span className="icon-shopping-bag"></span>
-                                <span className="number">2</span>
+                                <span className="number">{this.props.cart.length}</span>
                             </Link>
 
                             <a href="!#" className="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span className="icon-menu"></span></a>
@@ -58,4 +62,10 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+const mapStateToProps = (state) => ({
+    cart: state.cart,
+    user: state.user
+});
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
