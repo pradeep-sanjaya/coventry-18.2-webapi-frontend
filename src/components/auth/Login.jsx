@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {loginUser} from "../../services/auth";
+import { loginUser } from "../../services/auth";
 import SweetAlert from 'sweetalert2-react';
 
 class Login extends Component {
@@ -8,45 +8,57 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { email: '',password:''};
+        this.state = { email: '', password: '' };
 
     }
     inputChangeHandler = (event) => {
         let nam = event.target.name;
         let value = event.target.value;
-        this.setState({[nam]: value});
+        this.setState({ [nam]: value });
     };
-    handleSubmit(){
-        const {email,password} = this.state;
-        this.props.handleSubmit({email,password})
+    handleSubmit() {
+        const { email, password } = this.state;
+        this.props.handleSubmit({ email, password })
     }
     render() {
         return (
-            <div>
-                <h1>Login </h1>
-                 <div className="container">
-                 <div className="text-center">
-                     <div className="form-group">
+            <div className="site-section">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6 mb-5 mb-md-0">
+                            <h2 className="h3 mb-3 text-black">Login</h2>
+                            <div className="p-3 p-lg-5 border">
 
-                         <input type="text"  className="form-control" value={this.state.email} placeholder="Enter email" name="email" onChange={this.inputChangeHandler}/>
-                     </div>
-                     <div className="form-group">
+                                <div className="form-group row">
+                                    <div className="col-md-12">
+                                        <label for="c_companyname" className="text-black">Email </label>
+                                        <input type="text" className="form-control" value={this.state.email} placeholder="Enter email" name="email" onChange={this.inputChangeHandler} />
+                                    </div>
+                                </div>
 
-                         <input type="password"  className="form-control" value={this.state.password} placeholder="Enter Password" name="password" onChange={this.inputChangeHandler}/>
+                                <div className="form-group row">
+                                    <div className="col-md-12">
+                                        <label for="c_address" className="text-black">Password <span className="text-danger">*</span></label>
+                                        <input type="password" className="form-control" value={this.state.password} placeholder="Enter Password" name="password" onChange={this.inputChangeHandler} />
+                                    </div>
+                                </div>
 
-                     </div>
-                     <div className="form-group">
+                                <div className="form-group row">
+                                    <div className="col-md-12">
+                                        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handleSubmit}>{this.props.loading ? 'Signing In' : 'LOGIN'}</button>
+                                        <SweetAlert
+                                            show={this.props.loading}
+                                            title="Alert"
+                                            text="Loggin in please wait.."
+                                        />
+                                    </div>
+                                </div>
 
-                         <button type="button"  className="btn btn-success" onClick={this.handleSubmit}>{this.props.loading? 'Signing In' : 'LOGIN' }</button>
-                         <SweetAlert
-                             show={this.props.loading}
-                             title="Alert"
-                             text="Loggin in please wait.."
+                            </div>
+                        </div>
 
-                         />
-                     </div>
-                 </div>
-                 </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -54,11 +66,11 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
     authentication: state.authentication,
-    user:state.user,
-    loading:state.loading
+    user: state.user,
+    loading: state.loading
 });
 
-const mapDispatchToProps  = {
-    handleSubmit : loginUser
+const mapDispatchToProps = {
+    handleSubmit: loginUser
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
