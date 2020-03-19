@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
-import {BrowserRouter, Route, Router} from "react-router-dom";
+import { BrowserRouter, Route , Router, Switch  } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import Home from "./components/home/Home";
-import Cart from "./components/Cart.jsx";
+import Cart from "./components/Cart";
 import ProductDetails from "./components/ProductDetails";
 import NewArrivals from "./components/NewArrivals";
 import Contact from "./components/Contact";
@@ -14,7 +14,6 @@ import Register from "./components/auth/Register";
 import AuthenticatedRoute from '../src/components/router/AuthenticatedRoute'
 import PreAuthenticatedRoute from '../src/components/router/PreAuthenticatedRoute'
 import history from './helpers/route-history'
-import swal from 'sweetalert';
 
 
 class App extends Component {
