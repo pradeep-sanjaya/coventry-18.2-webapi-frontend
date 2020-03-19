@@ -1,25 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loginUser } from "../../services/auth";
+import { authService } from "../../services";
 import SweetAlert from 'sweetalert2-react';
 
 class Login extends Component {
+
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = { email: '', password: '' };
-
     }
+
     inputChangeHandler = (event) => {
         let nam = event.target.name;
         let value = event.target.value;
         this.setState({ [nam]: value });
     };
+
     handleSubmit() {
         const { email, password } = this.state;
         this.props.handleSubmit({ email, password })
     }
+
     render() {
         return (
             <div className="site-section">
@@ -71,6 +74,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    handleSubmit: loginUser
+    handleSubmit: authService.loginUser
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

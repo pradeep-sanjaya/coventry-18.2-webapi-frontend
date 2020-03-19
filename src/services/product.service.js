@@ -2,7 +2,12 @@ import fetchProducts from "../store/actions/products.action";
 import axiosInstance from "../helpers/axios";
 import fetchPopularProducts from "../store/actions/popularproducts.action";
 
-export function getProducts() {
+export const productService = {
+    getAll,
+    getPopular
+};
+
+function getAll() {
     return async (dispatch) => {
         try {
             axiosInstance.get("http://localhost:4000/api/v1/products").then(
@@ -20,7 +25,7 @@ export function getProducts() {
     };
 };
 
-export function getPopularProducts() {
+function getPopular() {
     return async (dispatch) => {
         try {
             axiosInstance.get("https://products.free.beeceptor.com/my/api/path").then(
