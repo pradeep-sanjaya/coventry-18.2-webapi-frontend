@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/cart-action";
+import { ADD_TO_CART } from "../actions/cart.action";
 
 export default function cartReducer(state = [], { type, payload }) {
     switch (type) {

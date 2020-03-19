@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addToCart } from "../store/actions/cart-action";
+import { addToCart } from "../store/actions/cart.action";
 
 class Product extends Component {
 
@@ -18,7 +18,7 @@ class Product extends Component {
             <div>
                 <div style={{ display: "flex" }}>
                     <div className="card" style={{ width: "18em", margin: "15px" }}>
-                        <img className="card-img-top" src={this.props.product.image} alt="" />
+                        <img className="card-img-top" src={this.props.product.imageUrl} alt="" />
                         <div className="card-body">
                             <h5 className="card-title">{this.props.product.name}</h5>
                             {this.props.product.isAvailable ?
