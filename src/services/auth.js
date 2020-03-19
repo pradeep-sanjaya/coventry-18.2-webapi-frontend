@@ -1,7 +1,8 @@
 import axiosInstance from "../helpers/axios";
-import {loginUserAction, registerUserAction} from "../store/actions/user-action";
+import {loginUserAction, registerUserAction} from "../store/actions/user.action";
 import loading from "../store/actions/handler-action";
 import history from '../helpers/route-history'
+import errorMessage from "../store/actions/error.action";
 export  function loginUser({email,password}) {
     return async (dispatch) => {
         dispatch(loading(true));
@@ -13,23 +14,26 @@ export  function loginUser({email,password}) {
                 (data) => {
                     dispatch(loading(false));
                     const {firstName,lastName,accessToken} = data.data.data;
+                    let name = firstName+" "+lastName;
                     if(accessToken) {
                         localStorage.setItem('accessToken',accessToken);
                         localStorage.setItem('user',JSON.stringify({name:firstName+" "+lastName}));
                     }
                     history.push('/products');
-                    dispatch(loginUserAction({firstName}));
+                    dispatch(loginUserAction({user:{name}}));
                 }
-            );
+            ).catch((error)=>{
+                dispatch(loading(false));
+                dispatch(errorMessage(error.response.data.error.message))
+            })
         } catch (err) {
+
             dispatch(loading(false));
-            console.log(err)
         }
     };
 };
 
 export  function registerUser({email,password,gender,firstName,lastName}) {
-    console.log(email)
     return async (dispatch) => {
         dispatch(loading(true));
         try {
@@ -46,10 +50,27 @@ export  function registerUser({email,password,gender,firstName,lastName}) {
                     const {status,message} = data.data.data;
                     dispatch(registerUserAction({status,message}));
                 }
-            );
+            ).catch((error)=>{
+                dispatch(loading(false));
+                dispatch(errorMessage(error.response.data.error.message))
+            })
         } catch (err) {
             dispatch(loading(false));
-            console.log(err)
         }
     };
 };
+export function logoutUser() {
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            localStorage.removeItem('user');
+            localStorage.removeItem('accessToken');
+            dispatch(loading(false));
+            dispatch(loginUserAction({user:null}));
+            history.push('/')
+        } catch (err) {
+            dispatch(loading(false));
+            return err
+        }
+    };
+}

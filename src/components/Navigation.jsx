@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import {logoutUser} from "../services/auth";
+import SweetAlert from "sweetalert2-react";
+import {resetError} from "../services/error";
 
 class Navigation extends Component {
+    constructor(props) {
+        super(props);
+        this.logoutUser = this.logoutUser.bind(this);
 
+    }
+    logoutUser(){
+      this.props.logoutUser()
+    }
     render() {
         return (
             <div className="site-navbar bg-white py-2">
@@ -31,19 +41,31 @@ class Navigation extends Component {
                                         <Link to="/">Home</Link>
                                     </li>
                                     <li>
-                                        <Link to="/products">Catalogue</Link>
+                                        <Link to="/products">Products</Link>
                                     </li>
-                                    <li>
-                                        <Link to="/new-arrivals">New Arrivals</Link>
-                                    </li>
+                                    {/*<li>*/}
+                                    {/*    <Link to="/new-arrivals">New Arrivals</Link>*/}
+                                    {/*</li>*/}
                                     <li>
                                         <Link to="/contact">Contact</Link>
                                     </li>
                                     {
-                                        this.props.user?
-                                            <li>
-                                                <Link to="#">Welcome | {this.props.user.name}</Link>
-                                            </li>:null
+                                        this.props.user ?
+                                            <li> <div className="dropdown show">
+                                                <a className="dropdown-toggle" href="#" role="button"
+                                                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false">
+                                                    Welcome | {this.props.user.name}
+                                                </a>
+
+                                                <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <Link className="dropdown-item" to="/products">Profile</Link>
+                                                    <a className="dropdown-item" onClick={this.logoutUser}>Logout</a>
+                                                </div>
+                                            </div>
+                                            </li>
+                                           :null
+
                                     }
 
                                     {this.props.user ? null :
@@ -71,6 +93,17 @@ class Navigation extends Component {
                         </div>
                     </div>
                 </div>
+                {
+                    this.props.error ?
+                        <SweetAlert
+                            show={true}
+                            title="Alert"
+                            type="error"
+                            text={this.props.error}
+                            onConfirm={this.props.resetErrorMessage}
+                        />:null
+
+                }
             </div>
         );
     }
@@ -78,8 +111,12 @@ class Navigation extends Component {
 
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    user: state.user
+    user: state.user,
+    error:state.error
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    logoutUser:logoutUser,
+    resetErrorMessage:resetError
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

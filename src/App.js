@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Route , Router, Switch  } from "react-router-dom";
+import { Route , Router, Switch } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import Home from "./components/home/Home";
 import Cart from "./components/Cart";
 import ProductDetails from "./components/ProductDetails";
-import NewArrivals from "./components/NewArrivals";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Login from './components/auth/Login'
@@ -14,6 +13,7 @@ import Register from "./components/auth/Register";
 import AuthenticatedRoute from '../src/components/router/AuthenticatedRoute'
 import PreAuthenticatedRoute from '../src/components/router/PreAuthenticatedRoute'
 import history from './helpers/route-history'
+import {connect} from "react-redux";
 
 
 class App extends Component {
@@ -25,12 +25,12 @@ class App extends Component {
                         <Navigation />
                         <Route exact path="/" component={Home}></Route>
                         <AuthenticatedRoute  path="/products" component={Products}/>
-                        <Route exact path="/cart" component={Cart}></Route>
-                        <Route exact path="/product/:id" component={ProductDetails}></Route>
-                        <Route exact path="/new-arrivals" component={NewArrivals}></Route>
-                        <Route exact path="/contact" component={Contact}></Route>
+                        <AuthenticatedRoute exact path="/cart" component={Cart}/>
+                        <AuthenticatedRoute exact path="/product/:id" component={ProductDetails}/>
                         <PreAuthenticatedRoute  path="/login" component={Login}/>
                         <PreAuthenticatedRoute  path="/register" component={Register}/>
+                        <AuthenticatedRoute  path="/profile" component={Products}/>
+                        <Route exact path="/contact" component={Contact}></Route>
                         <Footer />
                     </React.Fragment>
                 </Router>
@@ -39,4 +39,8 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    loading:state.loading,
+    error:state.error
+});
+export default connect(mapStateToProps)(App);
