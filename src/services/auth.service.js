@@ -1,8 +1,15 @@
-import axiosInstance from "../helpers/axios";
-import { loginUserAction, registerUserAction } from "../store/actions/user.action";
-import loading from "../store/actions/handler-action";
-import history from '../helpers/route-history'
-export function loginUser({ email, password }) {
+import axiosInstance from '../helpers/axios';
+import { userActions } from '../store/actions/user.action';
+import loading from '../store/actions/handler-action';
+import history from '../helpers/route-history';
+
+export const authService = {
+    loginUser,
+    registerUser,
+    logout
+};
+
+function loginUser({ email, password }) {
     return async (dispatch) => {
         dispatch(loading(true));
         try {
@@ -18,7 +25,7 @@ export function loginUser({ email, password }) {
                         localStorage.setItem('user', JSON.stringify({ name: firstName + " " + lastName }));
                     }
                     history.push('/products');
-                    dispatch(loginUserAction({ firstName }));
+                    dispatch(userActions.login({ firstName }));
                 }
             );
         } catch (err) {
@@ -28,7 +35,7 @@ export function loginUser({ email, password }) {
     };
 };
 
-export function registerUser({ email, password, gender, firstName, lastName }) {
+function registerUser({ email, password, gender, firstName, lastName }) {
     console.log(email)
     return async (dispatch) => {
         dispatch(loading(true));
@@ -44,7 +51,7 @@ export function registerUser({ email, password, gender, firstName, lastName }) {
                 (data) => {
                     dispatch(loading(false));
                     const { status, message } = data.data.data;
-                    dispatch(registerUserAction({ status, message }));
+                    dispatch(userActions.register({ status, message }));
                 }
             );
         } catch (err) {
@@ -53,3 +60,8 @@ export function registerUser({ email, password, gender, firstName, lastName }) {
         }
     };
 };
+
+function logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('user');
+}

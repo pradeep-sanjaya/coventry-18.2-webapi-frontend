@@ -1,24 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {registerUser} from "../../services/auth";
+import { authService } from "../../services";
 import SweetAlert from "sweetalert2-react";
 
 class Register extends Component {
+
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
         this.handleRegister = this.handleRegister.bind(this);
-        this.state = { email: '',password:'',gender:'',firstName:'',lastName:''};
+        this.state = { email: '', password: '', gender: '', firstName: '', lastName: '' };
     }
+
     inputChangeHandler = (event) => {
         let nam = event.target.name;
         let value = event.target.value;
-        this.setState({[nam]: value});
+        this.setState({ [nam]: value });
     };
-    handleRegister(){
-        const {email,password,gender,firstName,lastName} = this.state;
-        this.props.handleRegister({email,password,gender,firstName,lastName})
+
+    handleRegister() {
+        const { email, password, gender, firstName, lastName } = this.state;
+        this.props.handleRegister({ email, password, gender, firstName, lastName })
     }
+
     render() {
         return (
             <div>
@@ -27,12 +31,12 @@ class Register extends Component {
                     <div className="text-center">
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="text"  className="form-control" value={this.state.email} onChange={this.inputChangeHandler} name="email"/>
+                            <input type="text" className="form-control" value={this.state.email} onChange={this.inputChangeHandler} name="email" />
 
                         </div>
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="text"  className="form-control" value={this.state.password} onChange={this.inputChangeHandler} name="password"/>
+                            <input type="text" className="form-control" value={this.state.password} onChange={this.inputChangeHandler} name="password" />
 
                         </div>
                         <div className="form-group">
@@ -47,17 +51,17 @@ class Register extends Component {
                         </div>
                         <div className="form-group">
                             <label>First Name</label>
-                            <input type="text"  className="form-control" value={this.state.firstName} onChange={this.inputChangeHandler} name="firstName"/>
+                            <input type="text" className="form-control" value={this.state.firstName} onChange={this.inputChangeHandler} name="firstName" />
 
                         </div>
                         <div className="form-group">
                             <label>Last Name</label>
-                            <input type="text"  className="form-control" value={this.state.lastName} onChange={this.inputChangeHandler} name="lastName"/>
+                            <input type="text" className="form-control" value={this.state.lastName} onChange={this.inputChangeHandler} name="lastName" />
 
                         </div>
                         <div className="form-group">
 
-                            <button type="button"  className="btn btn-success" onClick={this.handleRegister}>{this.props.loading? 'Registering' : 'REGISTER' }</button>
+                            <button type="button" className="btn btn-success" onClick={this.handleRegister}>{this.props.loading ? 'Registering' : 'REGISTER'}</button>
 
                         </div>
                         <SweetAlert
@@ -66,12 +70,6 @@ class Register extends Component {
                             text="Loggin in please wait.."
 
                         />
-                        {/*<SweetAlert*/}
-                        {/*    show={this.props.registerStatus}*/}
-                        {/*    title="Alert"*/}
-                        {/*    text="Account Created Successfully please login."*/}
-
-                        {/*/>*/}
                     </div>
                 </div>
             </div>
@@ -81,12 +79,13 @@ class Register extends Component {
 
 const mapStateToProps = (state) => ({
     authentication: state.authentication,
-    user:state.user,
-    loading:state.loading,
-   // registerStatus:state.registerStatus
+    user: state.user,
+    loading: state.loading,
+    // registerStatus:state.registerStatus
 });
 
 const mapDispatchToProps = {
-    handleRegister: registerUser
+    handleRegister: authService.registerUser
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

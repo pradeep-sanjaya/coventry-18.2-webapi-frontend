@@ -1,7 +1,16 @@
+import { authService } from '../../services';
+
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 
-export function loginUserAction({ firstName }) {
+export const userActions = {
+    login,
+    logout,
+    register
+};
+
+function login({ firstName }) {
     return {
         type: LOGIN_USER,
         payload: {
@@ -9,7 +18,15 @@ export function loginUserAction({ firstName }) {
         }
     }
 }
-export function registerUserAction({ status, message }) {
+
+function logout() {
+    authService.logout();
+    return {
+        type: LOGOUT_USER
+    }
+}
+
+function register({ status, message }) {
     return {
         type: REGISTER_USER,
         payload: {
