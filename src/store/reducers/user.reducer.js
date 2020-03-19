@@ -1,4 +1,4 @@
-import {LOGIN_USER} from "../actions/user-action";
+import { LOGIN_USER } from "../actions/user.action";
 
 export default function userReducer(state = "", { type, payload }) {
     switch (type) {
