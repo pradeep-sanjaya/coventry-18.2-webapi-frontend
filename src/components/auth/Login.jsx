@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {loginUser} from "../../services/auth";
+import {authService} from "../../services/auth.service";
 import SweetAlert from 'sweetalert2-react';
 import {Link} from "react-router-dom";
 
@@ -82,6 +82,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps  = {
-    handleSubmit : loginUser,
+    handleSubmit : authService.loginUser,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {logoutUser} from "../services/auth";
+import {authService} from "../services/auth.service";
 import SweetAlert from "sweetalert2-react";
 import {resetError} from "../services/error";
 
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    logoutUser:logoutUser,
+    logoutUser:authService.logoutUser,
     resetErrorMessage:resetError
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

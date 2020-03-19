@@ -13,7 +13,6 @@ import Register from "./components/auth/Register";
 import AuthenticatedRoute from '../src/components/router/AuthenticatedRoute'
 import PreAuthenticatedRoute from '../src/components/router/PreAuthenticatedRoute'
 import history from './helpers/route-history'
-import {connect} from "react-redux";
 
 
 class App extends Component {
@@ -24,13 +23,12 @@ class App extends Component {
                     <React.Fragment>
                         <Navigation />
                         <Route exact path="/" component={Home}></Route>
-                        <AuthenticatedRoute  path="/products" component={Products}/>
-                        <AuthenticatedRoute exact path="/cart" component={Cart}/>
-                        <AuthenticatedRoute exact path="/product/:id" component={ProductDetails}/>
-                        <PreAuthenticatedRoute  path="/login" component={Login}/>
-                        <PreAuthenticatedRoute  path="/register" component={Register}/>
-                        <AuthenticatedRoute  path="/profile" component={Products}/>
+                        <AuthenticatedRoute path="/products" component={Products} />
+                        <Route exact path="/cart" component={Cart}></Route>
+                        <Route exact path="/product/:id" component={ProductDetails}></Route>
                         <Route exact path="/contact" component={Contact}></Route>
+                        <PreAuthenticatedRoute path="/login" component={Login} />
+                        <PreAuthenticatedRoute path="/register" component={Register} />
                         <Footer />
                     </React.Fragment>
                 </Router>
@@ -39,8 +37,4 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    loading:state.loading,
-    error:state.error
-});
-export default connect(mapStateToProps)(App);
+export default App;

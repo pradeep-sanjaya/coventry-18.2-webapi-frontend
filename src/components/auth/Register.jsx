@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {registerUser} from "../../services/auth";
+import {authService} from "../../services/auth.service";
 import SweetAlert from "sweetalert2-react";
 import {Link} from "react-router-dom";
 import {setError} from "../../services/error";
@@ -108,7 +108,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    handleRegister: registerUser,
+    handleRegister: authService.registerUser,
     setError:setError
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
