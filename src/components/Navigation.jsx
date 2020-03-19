@@ -17,7 +17,7 @@ class Navigation extends Component {
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container-fluid">
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="logo">
                             <div className="site-logo">
@@ -39,9 +39,23 @@ class Navigation extends Component {
                                     <li>
                                         <Link to="/contact">Contact</Link>
                                     </li>
-                                    <li>
-                                        <Link to="#">Welcome | {this.props.user}</Link>
-                                    </li>
+                                    {
+                                        this.props.user?
+                                            <li>
+                                                <Link to="#">Welcome | {this.props.user.name}</Link>
+                                            </li>:null
+                                    }
+
+                                    {this.props.user ? null :
+                                    <React.Fragment>
+                                        <li>
+                                            <Link to="/login">Login</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/register">Register</Link>
+                                        </li>
+                                    </React.Fragment>
+                                    }
                                 </ul>
                             </nav>
                         </div>

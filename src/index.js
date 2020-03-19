@@ -13,7 +13,7 @@ const store = createStore(
     rootReducer,
     {
         products: [],
-        user: "heshan",
+        user: JSON.parse(localStorage.getItem('user')),
         cart: []
     },
     compose(

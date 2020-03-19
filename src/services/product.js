@@ -1,12 +1,13 @@
-import axios from "axios";
 import fetchProducts from "../store/actions/product-action";
+import axiosInstance from "../helpers/axios";
 
 export default function getProducts() {
     return async (dispatch) => {
         try {
-            axios.get("https://products.free.beeceptor.com/my/api/path").then(
+            axiosInstance.get("http://localhost:4000/api/v1/products").then(
                 (data) => {
-                    dispatch(fetchProducts(data.data.result));
+                    console.log(data)
+                    dispatch(fetchProducts(data.data.data));
                 }
             );
         } catch (err) {}
