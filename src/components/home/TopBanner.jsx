@@ -6,7 +6,6 @@ class TopBanner extends Component {
     render() {
 
         const productId = 10;
-
         return (
             <div className="site-blocks-cover" data-aos="fade">
                 <div className="container">

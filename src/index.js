@@ -26,6 +26,7 @@ const store = createStore(
 );
 
 store.dispatch(productService.getAll());
+store.dispatch(productService.getUserCart());
 
 ReactDOM.render(
     <Provider store={store}>

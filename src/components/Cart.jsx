@@ -1,51 +1,46 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {decodeUrl} from "../helpers/url-parser";
+import CartItem from "./Cart/CartItem";
 
 class Cart extends Component {
     render() {
         return (
             <div>
-
-                <h1>Cart </h1> Total : Rs. {
-                     this.props.cart.reduce((sum,a)=>{
-                          return sum + a.price;
-                     },0)
-            }.00
-                <div style={{ display: "flex" }}>
-                    {this.props.cart.map((product, key) => {
-                        return (
-                            <div
-                                className="card"
-                                style={{ width: "18em", margin: "15px" }}
-                                key={key}
-                            >
-                                <img
-                                    className="card-img-top"
-                                    src={decodeUrl(product.imageUrl)}
-                                    alt=""
-                                />
-                                <div className="card-body">
-                                    <h5 className="card-title">{product.name}</h5>
-
-                                    <h5>Rs.{product.price}.00</h5>
-                                    <p className="card-text">
-                                        Some quick example text to build on the card title and make
-										up the bulk of the card's content.
-									</p>
-                                    <div className="text-center">
-                                        <button className="btn btn-primary">Quantity : {product.qty}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+               <div className="row">
+                   <div className="col-md-6">
+                       <div className="list-group">
+                           {this.props.cart.map((product, key) => {
+                               return (
+                                   <div key={key}>
+                                       <CartItem product = {product} />
+                                   </div>
+                               );
+                           })}
+                       </div>
+                   </div>
+                   <div className="col-md-6">
+                       {this.props.cart.length>0 ?
+                           <div className="p-3 p-lg-5 border">
+                               {<h1>Cart Total : Rs. {this.props.cart.reduce((sum,a)=>{return sum + a.price;},0)}.00</h1>}
+                               <div className="form-group row">
+                                   <div className="col-md-8">
+                                       <label htmlFor="coupon" className="text-black">Coupon Code <span className="text-success">*</span></label>
+                                      <div className="col-md-8">
+                                          <input type="text" className="form-control" name="coupon"  />
+                                      </div>
+                                       <div className="col-md-3" style={{marginTop:'10px'}}>
+                                           <button  className="btn btn-success">Apply</button>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div> :null
+                       }
+                   </div>
+               </div>
             </div>
         );
     }
 }
-
 const mapStateToProps = (state) => ({
     cart: state.cart
 });

@@ -7,21 +7,7 @@ class Products extends Component {
 
     constructor(props) {
         super(props);
-        this.getProducts = this.getProducts.bind(this);
     }
-
-    componentWillMount() {
-        console.log("hi")
-    }
-
-    componentDidMount() {
-        this.props.fetchProducts()
-    }
-
-    getProducts() {
-
-    }
-
     render() {
         return (
             <div>
@@ -30,7 +16,7 @@ class Products extends Component {
                     {this.props.products.map((product, key) => {
                         return (
                             <div key={key}>
-                                <Product product={product} />;
+                                <Product product={product}/>;
                             </div>
                         );
                     })}
@@ -41,11 +27,11 @@ class Products extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    products: state.products
+    products: state.products,
+    cart : state.cart
 });
 
 const mapDispacthToProps = {
-    fetchProducts: productService.getAll
 };
 
 export default connect(mapStateToProps, mapDispacthToProps)(Products);
