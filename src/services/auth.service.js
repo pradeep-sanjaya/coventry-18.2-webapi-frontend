@@ -14,7 +14,7 @@ function loginUser({ email, password }) {
     return async (dispatch) => {
         dispatch(loading(true));
         try {
-            axiosInstance.post("http://localhost:4000/api/v1/auth/login", {
+            axiosInstance.post("https://webapi-backend.herokuapp.com/api/v1/auth/login", {
                 "email": email,
                 "password": password
             }).then(
@@ -44,7 +44,7 @@ function registerUser({ email, password, gender, firstName, lastName }) {
     return async (dispatch) => {
         dispatch(loading(true));
         try {
-            axiosInstance.post("http://localhost:4000/api/v1/auth/register", {
+            axiosInstance.post("https://webapi-backend.herokuapp.com/api/v1/auth/register", {
                 email,
                 password,
                 "role": 'Customer',
