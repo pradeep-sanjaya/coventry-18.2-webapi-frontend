@@ -1,7 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Product from "./Product";
+import { productService } from "../services";
+
 class Products extends Component {
+
+    constructor(props) {
+        super(props);
+        this.getProducts = this.getProducts.bind(this);
+    }
+
+    componentWillMount() {
+        console.log("hi")
+        //this.props.fetchProducts()
+    }
+
+    componentDidMount() {
+        this.props.fetchProducts()
+    }
+
+    getProducts() {
+
+    }
 
     render() {
         return (
@@ -25,4 +45,8 @@ const mapStateToProps = (state) => ({
     products: state.products
 });
 
-export default connect(mapStateToProps)(Products);
+const mapDispacthToProps = {
+    fetchProducts: productService.getAll
+};
+
+export default connect(mapStateToProps, mapDispacthToProps)(Products);
