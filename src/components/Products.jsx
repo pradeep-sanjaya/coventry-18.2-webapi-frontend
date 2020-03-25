@@ -12,7 +12,6 @@ class Products extends Component {
 
     componentWillMount() {
         console.log("hi")
-        //this.props.fetchProducts()
     }
 
     componentDidMount() {

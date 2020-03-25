@@ -10,7 +10,7 @@ export const productService = {
 function getAll() {
     return async (dispatch) => {
         try {
-            axiosInstance.get("https://webapi-backend.herokuapp.com/api/v1/products").then(
+            axiosInstance.get("/products").then(
                 (data) => {
                     if (data !== undefined) {
                         dispatch(fetchProducts(data.data.data));
@@ -28,7 +28,7 @@ function getAll() {
 function getPopular() {
     return async (dispatch) => {
         try {
-            axiosInstance.get("https://webapi-backend.herokuapp.com/api/v1/products").then(
+            axiosInstance.get("/products").then(
                 (data) => {
                     dispatch(fetchPopularProducts(data.data.data));
                 }

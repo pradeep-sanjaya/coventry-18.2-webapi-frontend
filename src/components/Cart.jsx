@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {decodeUrl} from "../helpers/url-parser";
 
 class Cart extends Component {
     render() {
         return (
             <div>
-                <h1>Cart </h1>
+
+                <h1>Cart </h1> Total : Rs. {
+                     this.props.cart.reduce((sum,a)=>{
+                          return sum + a.price;
+                     },0)
+            }.00
                 <div style={{ display: "flex" }}>
                     {this.props.cart.map((product, key) => {
                         return (
@@ -16,7 +22,7 @@ class Cart extends Component {
                             >
                                 <img
                                     className="card-img-top"
-                                    src={product.image}
+                                    src={decodeUrl(product.imageUrl)}
                                     alt=""
                                 />
                                 <div className="card-body">
