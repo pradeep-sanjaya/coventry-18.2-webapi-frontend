@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 
 /* helpers */
 import AuthenticatedRoute from '../src/components/router/AuthenticatedRoute'
