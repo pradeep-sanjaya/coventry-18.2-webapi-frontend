@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class PopularProducts extends Component {
+
     render() {
         return (
             <div className="site-section">
@@ -12,64 +14,50 @@ class PopularProducts extends Component {
                     </div>
                     <div className="row">
                         <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_2.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Gray Shoe</a></h2>
-                            <strong className="item-price">$20.00</strong>
+                            <Link to={`/product/1`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_1.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title">
+                                <Link to={`/product/1`}>LONG SLEEVE SHIRT WITH EMBShop Now</Link>
+                            </h2>
+                            <strong className="item-price">LKR 3,390.00</strong>
                         </div>
                         <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_3.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Blue Shoe High Heels</a></h2>
-                            <strong className="item-price"><del>$46.00</del> $28.00</strong>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/model_5.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Denim Jacket</a></h2>
-                            <strong className="item-price"><del>$46.00</del> $28.00</strong>
-
-                            <div className="star-rating">
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                            </div>
-
-                        </div>
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_1.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Leather Green Bag</a></h2>
-                            <strong className="item-price"><del>$46.00</del> $28.00</strong>
-                            <div className="star-rating">
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                                <span className="icon-star2 text-warning"></span>
-                            </div>
+                            <Link to={`/product/2`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_2.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title"><Link to={`/product/2`}>BEAT THE HEAT PANT</Link></h2>
+                            <strong className="item-price">LKR 3,450.00</strong>
                         </div>
 
                         <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/model_1.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Smooth Cloth</a></h2>
-                            <strong className="item-price"><del>$46.00</del> $28.00</strong>
+                            <Link to={`/product/3`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_3.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title"><Link to={`/product/3`}>BUCKLE DETAILED LINEN PANT</Link></h2>
+                            <strong className="item-price">LKR 3,490.00</strong>
                         </div>
                         <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <a href="!#" className="product-item md-height bg-gray d-block">
-                                <img src="images/model_7.png" alt="" className="img-fluid" />
-                            </a>
-                            <h2 className="item-title"><a href="!#">Yellow Jacket</a></h2>
-                            <strong className="item-price">$58.00</strong>
+                            <Link to={`/product/4`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_4.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title"><Link to={`/product/4`}>VNECK SHIFT LINEN DRESS</Link></h2>
+                            <strong className="item-price">LKR 3,675.00</strong>
+                        </div>
+
+                        <div className="col-lg-4 col-md-6 item-entry mb-4">
+                            <Link to={`/product/5`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_5.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title"><Link to={`/product/5`}>RIB TUBE TOP</Link></h2>
+                            <strong className="item-price">LKR 2,075.00</strong>
+                        </div>
+                        <div className="col-lg-4 col-md-6 item-entry mb-4">
+                            <Link to={`/product/6`} className="product-item md-height bg-gray d-block">
+                                <img src="images/prod_6.jpg" alt="" className="img-fluid" />
+                            </Link>
+                            <h2 className="item-title"><Link to={`/product/6`}>IN HER POWER</Link></h2>
+                            <strong className="item-price">LKR 3,350.00</strong>
                         </div>
 
                     </div>
