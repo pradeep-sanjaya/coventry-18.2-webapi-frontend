@@ -20,11 +20,11 @@ function loginUser({ email, password }) {
             }).then(
                 (data) => {
                     dispatch(loading(false));
-                    const { firstName, lastName, accessToken,_id } = data.data.data;
+                    const { firstName, lastName, accessToken, _id } = data.data.data;
                     let name = firstName + " " + lastName;
                     if (accessToken) {
                         localStorage.setItem('accessToken', accessToken);
-                        localStorage.setItem('user', JSON.stringify({ name: firstName + " " + lastName ,userId:_id}));
+                        localStorage.setItem('user', JSON.stringify({ name: firstName + " " + lastName, userId: _id }));
                     }
                     history.push('/products');
                     dispatch(userActions.login({ user: { name } }));
