@@ -9,13 +9,15 @@ import { Provider } from "react-redux";
 import rootReducer from "./store/reducers";
 import reduxthunk from "redux-thunk";
 import { productService } from "./services";
+import {couponService} from "./services/coupon.service";
 
 const store = createStore(
     rootReducer,
     {
         products: [],
         user: JSON.parse(localStorage.getItem('user')),
-        cart: []
+        cart: [],
+        coupons:[]
     },
     compose(
         applyMiddleware(reduxthunk),
@@ -27,6 +29,7 @@ const store = createStore(
 
 store.dispatch(productService.getAll());
 store.dispatch(productService.getUserCart());
+store.dispatch(couponService.getAll());
 
 ReactDOM.render(
     <Provider store={store}>

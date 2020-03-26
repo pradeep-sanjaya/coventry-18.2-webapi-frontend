@@ -1,14 +1,25 @@
 import axiosInstance from "../helpers/axios";
 import fetchProducts from "../store/actions/products.action";
 import fetchPopularProducts from "../store/actions/popularproducts.action";
-import { addToCart } from "../store/actions/cart.action";
+import {
+    addToCart,
+    deleteItemFromCart,
+    descreaseCartItemQty,
+    increaseCartItemQty,
+    updateCartItems
+} from "../store/actions/cart.action";
+import history from "../history";
 
 export const productService = {
     getAll,
     getPopular,
     addItemToCart,
     getUserCart,
-    updateCart
+    updateCart,
+    deleteFromCart,
+    increaseItemQtyCart,
+    decreaseItemQtyCart,
+    placeOrder
 };
 
 function getAll() {
@@ -100,6 +111,112 @@ function updateCart(product, cart) {
         }
     };
 };
+function deleteFromCart(product,cart) {
+    return async (dispatch) => {
+        try {
+            let deletedItem = {
+              _id:product._id
+            };
+            let newCartAfterDelete = [];
+            let newCartItems = cart.filter((item)=>{
+               return item._id !== deletedItem._id
+            });
+            newCartItems.forEach((item) => {
+                newCartAfterDelete.push({
+                    "productId": item._id,
+                    "selectedQty": item.selectedQty
+                });
+            });
+            axiosInstance.put("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null, {
+                "userId": JSON.parse(localStorage.getItem('user')).userId ?? null,
+                "selected": newCartAfterDelete
+            }).then(
+                (data) => {
+                    console.log(data)
+                    if (data.data.data.selected) {
+
+                        dispatch(deleteItemFromCart(product));
+
+                    }
+                }
+            );
+        } catch (err) {
+            console.log(err)
+        }
+    };
+}
+function increaseItemQtyCart(product,cart) {
+    return async (dispatch) => {
+        try {
+
+            dispatch(increaseCartItemQty(product));
+
+            let itemToBeIncreasedQty = cart.filter((item)=>{
+                return item._id === product._id
+            });
+
+
+            let rest = cart.filter((item)=>{
+                return item._id !== product._id
+            });
+
+            let newCart = [...rest,itemToBeIncreasedQty[0]];
+            let newCartUpdate = [];
+            newCart.forEach((item) => {
+                newCartUpdate.push({
+                    "productId": item._id,
+                    "selectedQty": item.selectedQty
+                });
+            });
+            axiosInstance.put("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null, {
+                "userId": JSON.parse(localStorage.getItem('user')).userId ?? null,
+                "selected": newCartUpdate
+            }).then(
+                (data) => {
+                    console.log(data)
+                }
+            );
+        } catch (err) {
+            console.log(err)
+        }
+    };
+}
+function decreaseItemQtyCart(product,cart) {
+    return async (dispatch) => {
+        try {
+            dispatch(descreaseCartItemQty(product))
+
+            let itemToBeIncreasedQty = cart.filter((item)=>{
+                return item._id === product._id
+            });
+
+
+            let rest = cart.filter((item)=>{
+                return item._id !== product._id
+            });
+
+            let newCart = [...rest,itemToBeIncreasedQty[0]];
+            let newCartUpdate = [];
+            newCart.forEach((item) => {
+                newCartUpdate.push({
+                    "productId": item._id,
+                    "selectedQty": item.selectedQty
+                });
+            });
+            axiosInstance.put("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null, {
+                "userId": JSON.parse(localStorage.getItem('user')).userId ?? null,
+                "selected": newCartUpdate
+            }).then(
+                (data) => {
+                    console.log(data)
+                }
+            );
+
+        } catch (err) {
+            console.log(err)
+        }
+    };
+}
 function getUserCart() {
     return async (dispatch) => {
         try {
@@ -110,6 +227,31 @@ function getUserCart() {
                         data.data.data.products.forEach((item) => {
                             dispatch(addToCart(item));
                         })
+                    }
+                }
+            );
+        } catch (err) {
+
+        }
+    };
+};
+function placeOrder({paymentType,street,district,zipCode}) {
+    return async (dispatch) => {
+        try {
+            axiosInstance.post("/orders",{
+                "userId":JSON.parse(localStorage.getItem('user')).userId ?? null,
+                paymentType,
+                "deliveryAddress": {
+                    street,
+                    district,
+                    zipCode
+                }
+            }).then(
+                (data) => {
+                    console.log(data)
+                    if (data.data.data) {
+                        window.location.href = "/"
+
                     }
                 }
             );
