@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addToCart } from "../store/actions/cart.action";
+import React, { Component } from 'react';
+import { axios } from 'axios';
+import { connect } from 'react-redux';
+import { addToCart } from '../store/actions/cart.action';
 
 class ProductDetails extends Component {
 
@@ -18,12 +19,12 @@ class ProductDetails extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
 
-        // axios.get(`/api/users/${params.userId}`)
-        //     .then(({ data: user }) => {
-        //         console.log('user', user);
+        axios.get(`/api/users/${params.userId}`)
+            .then(({ data: user }) => {
+                console.log('user', user);
 
-        //         this.setState({ user });
-        //     });
+                this.setState({ user });
+            });
     }
 
     onAddToCart() {
@@ -69,14 +70,12 @@ class ProductDetails extends Component {
     }
 }
 
-export default ProductDetails;
+const mapStateToProps = (state) => ({
+    product: null
+});
 
-// const mapStateToProps = (state) => ({
-//     product: null
-// });
+const mapDispatchToProps = {
+    onAddToCart: addToCart
+};
 
-// const mapDispatchToProps = {
-//     onAddToCart: addToCart
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
