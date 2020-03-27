@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axiosInstance from '../../helpers/axios';
 import { config } from '../../config/config'
 import Category from '../categories/CategoryDetails';
@@ -11,10 +10,6 @@ class Collections extends Component {
         categories: [
         ]
     };
-
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return (
@@ -48,7 +43,6 @@ class Collections extends Component {
     }
 
     async componentDidMount() {
-        console.log(config.API_BASE_URL)
         let { data } = await axiosInstance.get(config.API_BASE_URL + '/categories');
         let categories = data.data.map(category => {
             return ({

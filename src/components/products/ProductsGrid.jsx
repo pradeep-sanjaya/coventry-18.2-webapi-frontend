@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { productService } from '../../services';
 import ProductsGridItem from './ProductsGridItem';
+import CategoryFilter from './CategoryFilter';
 
 class ProductsGrid extends Component {
 
@@ -53,16 +54,7 @@ class ProductsGrid extends Component {
                             </div>
                         </div>
 
-                        <div className="col-md-3 order-2 mb-5 mb-md-0">
-                            <div className="border p-4 rounded mb-4">
-                                <h3 className="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
-                                <ul className="list-unstyled mb-0">
-                                    <li className="mb-1"><a href="#" className="d-flex"><span>Men</span></a></li>
-                                    <li className="mb-1"><a href="#" className="d-flex"><span>Women</span></a></li>
-                                    <li className="mb-1"><a href="#" className="d-flex"><span>Children</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <CategoryFilter />
                     </div>
 
                 </div>
