@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import axiosInstance from '../../helpers/axios';
+import { config } from '../config/config'
+import Category from '../categories/CategoryDetails';
 
 class Collections extends Component {
+
+    state = {
+        firstCategory: null,
+        categories: [
+        ]
+    };
+
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         return (
             <div className="site-section">
@@ -10,27 +24,47 @@ class Collections extends Component {
                         <h2 className="text-uppercase"><span className="d-block">Discover</span> The Collections</h2>
                     </div>
                     <div className="row align-items-stretch">
-                        <div className="col-lg-8">
-                            <div className="product-item sm-height full-height bg-gray">
-                                <Link to={`/category/1`} className="product-category">Women</Link>
-                                <img src="images/model_4.png" alt="" className="img-fluid" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4">
-                            <div className="product-item sm-height bg-gray mb-4">
-                                <Link to={`/category/2`} className="product-category">Men</Link>
-                                <img src="images/model_5.png" alt="" className="img-fluid" />
-                            </div>
+                        {this.state.firstCategory != null ?
+                            (
+                                <div className="col-lg-8">
+                                    <Category category={this.state.firstCategory} cls="product-item sm-height full-height bg-gray" />
+                                </div>
+                            ) : null
+                        }
 
-                            <div className="product-item sm-height bg-gray">
-                                <Link to={`/category/3`} className="product-category">Accessories</Link>
-                                <img src="images/model_6.png" alt="" className="img-fluid" />
-                            </div>
+                        <div className="col-lg-4">
+                            {
+                                this.state.categories.map((category, key) => {
+                                    return (
+                                        <Category category={category} key={key} cls="product-item sm-height bg-gray mb-4" />
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
+    }
+
+    async componentDidMount() {
+        console.log(config.API_BASE_URL)
+        let { data } = await axiosInstance.get(config.API_BASE_URL + '/categories');
+        let categories = data.data.map(category => {
+            return ({
+                id: category._id,
+                name: category.name,
+                imageUrl: category.imageUrl
+            });
+        });
+
+        if (Array.isArray(categories) && categories.length > 0) {
+            let firstCategory = categories[0];
+            let otherCategories = categories.splice(1);
+            this.setState({ firstCategory: firstCategory, categories: otherCategories });
+        }
+
+        console.log(this.state);
     }
 }
 
