@@ -20,7 +20,7 @@ class TopBanner extends Component {
                             </div>
                         </div>
                         <div className="col-md-6 order-1 align-self-end">
-                            <img src="images/model_3.png" alt="" className="img-fluid"></img>
+                            <img src={`images/model_3.png`} alt="" className="img-fluid"></img>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,16 @@ import { Link } from "react-router-dom";
 class Footer extends Component {
     render() {
         return (
-            <footer className="site-footer custom-border-top">
+            <footer className="site-footer custom-border-top" style={{
+                position: 'relative',
+                backgroundColor: 'white',
+                bottom: '0px',
+                left: '0px',
+                right: '0px',
+                marginBottom: '0px',
+                height:'100px'
+            }
+            }>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 ml-auto mb-5 mb-lg-0">

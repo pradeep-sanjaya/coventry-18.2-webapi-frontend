@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import CartItem from "./Cart/CartItem";
 import {couponService} from "../services/coupon.service";
 import {productService} from "../services";
+import Loading from "./spinners/Loading";
 
 class Cart extends Component {
     constructor(props){
@@ -22,6 +23,7 @@ class Cart extends Component {
     render() {
         return (
             <div>
+                <Loading loading={this.props.loading} />
                <div className="row">
                    <div className="col-md-6">
                        <h2 style={{marginLeft:'30px'}}>Cart Items</h2>
@@ -101,7 +103,8 @@ class Cart extends Component {
 }
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    coupons:state.coupons
+    coupons:state.coupons,
+    loading:state.loading
 });
 
 const mapDispatchToProps = {

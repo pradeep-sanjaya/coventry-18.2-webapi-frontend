@@ -9,6 +9,7 @@ import {
     updateCartItems
 } from "../store/actions/cart.action";
 import history from "../history";
+import loading from "../store/actions/handler-action";
 
 export const productService = {
     getAll,
@@ -24,17 +25,21 @@ export const productService = {
 
 function getAll() {
     return async (dispatch) => {
+        dispatch(loading(true));
         try {
             axiosInstance.get("/products").then(
                 (data) => {
                     if (data !== undefined) {
+                        dispatch(loading(false));
                         dispatch(fetchProducts(data.data.data));
                     } else {
+                        dispatch(loading(false));
                         dispatch(fetchProducts([]));
                     }
                 }
             );
         } catch (err) {
+            dispatch(loading(false));
             dispatch(fetchProducts([]));
         }
     };
@@ -220,18 +225,20 @@ function decreaseItemQtyCart(product,cart) {
 function getUserCart() {
     return async (dispatch) => {
         try {
+            dispatch(loading(true));
             axiosInstance.get("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null).then(
                 (data) => {
 
                     if (data.data.data.products) {
                         data.data.data.products.forEach((item) => {
+                            dispatch(loading(false));
                             dispatch(addToCart(item));
                         })
                     }
                 }
             );
         } catch (err) {
-
+            dispatch(loading(false));
         }
     };
 };

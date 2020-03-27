@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { productService } from '../../services';
 import ProductsGridItem from './ProductsGridItem';
 import CategoryFilter from './CategoryFilter';
+import Loading from "../spinners/Loading";
 
 class ProductsGrid extends Component {
 
@@ -14,7 +15,7 @@ class ProductsGrid extends Component {
         return (
             <div className="site-section">
                 <div className="container">
-
+                    <Loading loading={this.props.loading}/>
                     <div className="row mb-5">
                         <div className="col-md-9 order-1">
 
@@ -64,7 +65,8 @@ class ProductsGrid extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    products: state.products
+    products: state.products,
+    loading:state.loading
 });
 
 const mapDispacthToProps = {
