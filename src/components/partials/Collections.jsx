@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../helpers/axios';
-import { config } from '../config/config'
+import { config } from '../../config/config'
 import Category from '../categories/CategoryDetails';
 
 class Collections extends Component {
