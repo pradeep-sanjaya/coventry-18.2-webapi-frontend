@@ -10,7 +10,6 @@ class ProductsGrid extends Component {
     componentDidMount() {
         this.props.fetchProducts()
     }
-
     render() {
         return (
             <div className="site-section">

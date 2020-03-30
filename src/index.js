@@ -17,7 +17,8 @@ const store = createStore(
         products: [],
         user: JSON.parse(localStorage.getItem('user')),
         cart: [],
-        coupons:[]
+        coupons:[],
+        cartTotal:0.00
     },
     compose(
         applyMiddleware(reduxthunk),

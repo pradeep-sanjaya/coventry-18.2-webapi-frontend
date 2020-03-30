@@ -21,7 +21,6 @@ export function deleteItemFromCart(item) {
     }
 }
 export function updateCartItems(items) {
-    console.log(items)
     return {
         type: UPDATE_CART,
         payload: {

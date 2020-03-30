@@ -10,6 +10,7 @@ import {
 } from "../store/actions/cart.action";
 import history from "../history";
 import loading from "../store/actions/handler-action";
+import {updateCartTotal} from "../store/actions/carttotal.action";
 
 export const productService = {
     getAll,
@@ -72,8 +73,15 @@ function addItemToCart(product) {
             }).then(
                 (data) => {
                     if (data.data.data.selected) {
-                        product.selectedQty = data.data.data.selected[0].selectedQty
+
+                        let {totalPrice} = data.data.data;
+
+                        product.selectedQty = data.data.data.selected[0].selectedQty;
+
+                        dispatch(updateCartTotal(totalPrice));
+
                         dispatch(addToCart(product));
+
                     }
                 }
             );
@@ -101,12 +109,17 @@ function updateCart(product, cart) {
                 "selected": itemsAdded
             }).then(
                 (data) => {
-
                     if (data.data.data.selected) {
                         let productItem = data.data.data.selected.filter((item) => {
-                            return item.productId === product._id;
+                            return item._id === product._id;
                         });
+
                         product.selectedQty = productItem[0].selectedQty;
+
+                        let {totalPrice} = data.data.data;
+
+                        dispatch(updateCartTotal(totalPrice));
+
                         dispatch(addToCart(product));
                     }
                 }
@@ -137,7 +150,8 @@ function deleteFromCart(product,cart) {
                 "selected": newCartAfterDelete
             }).then(
                 (data) => {
-                    console.log(data)
+                    let {totalPrice} = data.data.data;
+                    dispatch(updateCartTotal(totalPrice));
                     if (data.data.data.selected) {
 
                         dispatch(deleteItemFromCart(product));
@@ -178,7 +192,8 @@ function increaseItemQtyCart(product,cart) {
                 "selected": newCartUpdate
             }).then(
                 (data) => {
-                    console.log(data)
+                    let {totalPrice} = data.data.data;
+                    dispatch(updateCartTotal(totalPrice));
                 }
             );
         } catch (err) {
@@ -213,7 +228,8 @@ function decreaseItemQtyCart(product,cart) {
                 "selected": newCartUpdate
             }).then(
                 (data) => {
-                    console.log(data)
+                    let {totalPrice} = data.data.data;
+                    dispatch(updateCartTotal(totalPrice));
                 }
             );
 
@@ -228,7 +244,8 @@ function getUserCart() {
             dispatch(loading(true));
             axiosInstance.get("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null).then(
                 (data) => {
-
+                    let {totalPrice} = data.data.data;
+                    dispatch(updateCartTotal(totalPrice));
                     if (data.data.data.products) {
                         data.data.data.products.forEach((item) => {
                             dispatch(loading(false));
@@ -255,8 +272,9 @@ function placeOrder({paymentType,street,district,zipCode}) {
                 }
             }).then(
                 (data) => {
-                    console.log(data)
                     if (data.data.data) {
+
+                        dispatch(updateCartTotal(0));
                         window.location.href = "/"
 
                     }

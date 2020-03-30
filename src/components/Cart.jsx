@@ -40,7 +40,7 @@ class Cart extends Component {
                    <div className="col-md-6">
                        {this.props.cart.length>0 ?
                            <div className="p-3 p-lg-5 border">
-                               {<h1>Cart Total : Rs. {this.props.cart.reduce((sum,a)=>{return sum +(a.selectedQty * a.price);},0)}.00</h1>}
+                               {<h1>Cart Total : Rs. {this.props.cartTotal}.00</h1>}
                                <div className="form-group row">
                                    <div className="col-md-8">
                                        <label htmlFor="coupon" className="text-black">Coupon Code <span className="text-success">*</span></label>
@@ -104,7 +104,8 @@ class Cart extends Component {
 const mapStateToProps = (state) => ({
     cart: state.cart,
     coupons:state.coupons,
-    loading:state.loading
+    loading:state.loading,
+    cartTotal:state.cartTotal
 });
 
 const mapDispatchToProps = {

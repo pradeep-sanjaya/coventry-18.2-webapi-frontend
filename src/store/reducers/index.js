@@ -5,6 +5,7 @@ import cartReducer from "./cart.reducer";
 import loadingReducer from "./handler.reducer";
 import errorReducer from "./error.reducer";
 import couponReducer from "./coupon.reducer";
+import cartTotalReducer from "./carttotal.reducer";
 
 export default combineReducers({
     products: productsReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     loading:loadingReducer,
     error:errorReducer,
     coupons:couponReducer,
+    cartTotal:cartTotalReducer
 });
