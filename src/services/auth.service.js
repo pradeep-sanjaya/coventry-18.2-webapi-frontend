@@ -54,7 +54,6 @@ function registerUser({ email, password, gender, firstName, lastName }) {
             }).then(
                 (data) => {
                     dispatch(loading(false));
-                    alert("Account created successfully. Please Login");
                     history.push('/login');
                 }
             ).catch((error) => {

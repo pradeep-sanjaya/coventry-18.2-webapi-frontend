@@ -8,8 +8,9 @@ import Loading from "./spinners/Loading";
 class Cart extends Component {
     constructor(props){
         super(props);
-        this.state = { street: '', district: '', paymentType: 'Cash on Delivery', zipCode: '' };
+        this.state = { street: '', district: '', paymentType: 'Cash on Delivery', zipCode: '',coupon:'' };
         this.placeOrder=this.placeOrder.bind(this);
+        this.addDiscountToCart=this.addDiscountToCart.bind(this);
     }
     inputChangeHandler = (event) => {
         let nam = event.target.name;
@@ -19,6 +20,10 @@ class Cart extends Component {
     placeOrder(){
         const { street, district, paymentType, zipCode } = this.state;
         this.props.placeOrder({paymentType,district,street,zipCode});
+    }
+    addDiscountToCart(){
+        const { coupon } = this.state;
+        this.props.addDiscountToCart(coupon);
     }
     render() {
         return (
@@ -40,14 +45,14 @@ class Cart extends Component {
                    <div className="col-md-6">
                        {this.props.cart.length>0 ?
                            <div className="p-3 p-lg-5 border">
-                               {<h1>Cart Total : Rs. {this.props.cartTotal}.00</h1>}
+                               {<h1>Cart Total : Rs. {parseFloat(this.props.cartTotal).toFixed(2)}</h1>}
                                <div className="form-group row">
                                    <div className="col-md-8">
                                        <label htmlFor="coupon" className="text-black">Coupon Code <span className="text-success">*</span></label>
                                       <div className="col-md-8" style={{display:"flex"}}>
-                                          <input type="text" className="form-control" name="coupon" placeholder="EX - APR30" />
+                                          <input type="text" className="form-control" name="coupon" value={this.state.coupon} onChange={this.inputChangeHandler} placeholder="EX - APR30" />
 
-                                          <button  className="btn btn-outline-success" style={{marginLeft:"20px"}}>Apply</button>
+                                          <button  className="btn btn-outline-success" style={{marginLeft:"20px"}} onClick={this.addDiscountToCart} disabled={this.props.loading}>Apply</button>
 
                                       </div>
                                        <div style={{display:"flex",paddingLeft:'10px'}} >
@@ -110,6 +115,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     applyCoupon:couponService.applyCoupon,
-    placeOrder:productService.placeOrder
+    placeOrder:productService.placeOrder,
+    addDiscountToCart:productService.addDiscountToCart
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

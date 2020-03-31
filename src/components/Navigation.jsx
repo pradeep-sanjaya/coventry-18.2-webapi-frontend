@@ -43,9 +43,6 @@ class Navigation extends Component {
                                     <li>
                                         <Link to="/products">Shop</Link>
                                     </li>
-                                    {/*<li>*/}
-                                    {/*    <Link to="/new-arrivals">New Arrivals</Link>*/}
-                                    {/*</li>*/}
                                     <li>
                                         <Link to="/contact">Contact</Link>
                                     </li>
@@ -83,11 +80,13 @@ class Navigation extends Component {
                         </div>
                         <div className="icons">
                             <a href="!#" className="icons-btn d-inline-block js-search-open"><span className="icon-search"></span></a>
-
-                            <Link to="/cart" className="icons-btn d-inline-block bag">
-                                <span className="icon-shopping-bag"></span>
-                                <span className="number">{this.props.cart.length}</span>
-                            </Link>
+                            {
+                                this.props.user ?
+                                    <Link to="/cart" className="icons-btn d-inline-block bag">
+                                        <span className="icon-shopping-bag"></span>
+                                        <span className="number">{this.props.cart.length}</span>
+                                    </Link> : null
+                            }
 
                             <a href="!#" className="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span className="icon-menu"></span></a>
                         </div>

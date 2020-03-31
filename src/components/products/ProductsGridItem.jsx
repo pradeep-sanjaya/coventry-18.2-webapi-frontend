@@ -22,7 +22,7 @@ class ProductsGridItem extends Component {
 
     addedToCart() {
         return this.props.cart.filter((item) => {
-            return this.props.product._id === item._id
+            return this.props.product._id === item.productId
         }).length > 0;
     }
 
