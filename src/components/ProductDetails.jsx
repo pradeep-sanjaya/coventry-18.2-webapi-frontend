@@ -3,21 +3,21 @@ import { connect } from 'react-redux';
 import axiosInstance from '../helpers/axios';
 import { decodeUrl } from "../helpers/url-parser";
 import Loading from "./spinners/Loading";
-import {productService} from "../services";
+import { productService } from "../services";
 
 class ProductDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state ={
-            product:{},
-            inCart:false,
-            loading:false,
-            qty:1
+        this.state = {
+            product: {},
+            inCart: false,
+            loading: false,
+            qty: 1
         }
-        this. increaseQty=this.increaseQty.bind(this);
+        this.increaseQty = this.increaseQty.bind(this);
 
-        this.decreaseQty=this.decreaseQty.bind(this);
+        this.decreaseQty = this.decreaseQty.bind(this);
 
         this.onAddToCart = this.onAddToCart.bind(this);
 
@@ -26,10 +26,10 @@ class ProductDetails extends Component {
 
     }
     onAddToCart() {
-        this.props.onAddToCart(this.state.product,this.state.qty);
+        this.props.onAddToCart(this.state.product, this.state.qty);
     }
     onUpdateCart() {
-        this.props.onUpdateCart(this.state.product, this.props.cart,this.state.qty);
+        this.props.onUpdateCart(this.state.product, this.props.cart, this.state.qty);
     }
     addedToCart() {
         return this.props.cart.filter((item) => {
@@ -40,49 +40,49 @@ class ProductDetails extends Component {
     checkCartIsEmpty() {
         return this.props.cart.length === 0;
     }
-     async componentDidMount() {
+    async componentDidMount() {
         const { id } = this.props.match.params;
-         this.setState({
-             loading:true
-         });
-        axiosInstance.get('/products/'+id).then((data)=>{
-           this.setState({
-               product:data.data.data,
-               loading:false
-           })
-            let item =  this.props.cart.filter((item)=>{
+        this.setState({
+            loading: true
+        });
+        axiosInstance.get('/products/' + id).then((data) => {
+            this.setState({
+                product: data.data.data,
+                loading: false
+            })
+            let item = this.props.cart.filter((item) => {
                 return item.productId === this.state.product._id
             }).length > 0;
 
-            if(item) {
+            if (item) {
                 this.setState({
-                    inCart:true
+                    inCart: true
                 })
             }
-        }).catch((er)=>{
+        }).catch((er) => {
             console.log(er);
             this.setState({
-                loading:false
+                loading: false
             })
         });
     }
-    increaseQty(){
-        let newQty = this.state.qty+1;
+    increaseQty() {
+        let newQty = this.state.qty + 1;
         this.setState({
-            qty:newQty
+            qty: newQty
         })
     }
-    decreaseQty(){
-        let newQty = this.state.qty-1;
+    decreaseQty() {
+        let newQty = this.state.qty - 1;
         this.setState({
-            qty:newQty
+            qty: newQty
         })
     }
     render() {
 
         return (
             <div className="site-section">
-              <Loading loading={this.state.loading}/>
+                <Loading loading={this.state.loading} />
                 <div className="container">
                     {this.state && this.state.product && !this.state.loading &&
                         <div className="row">
@@ -102,9 +102,9 @@ class ProductDetails extends Component {
                                             <div className="mb-5">
                                                 <div className="input-group mb-3" style={{ maxWidth: "120px" }}>
                                                     <div className="input-group-prepend">
-                                                        <button className="btn btn-outline-primary js-btn-minus" type="button" onClick={() => { this.decreaseQty()}} disabled={this.state.inCart || this.state.qty<=0}>&minus;</button>
+                                                        <button className="btn btn-outline-primary js-btn-minus" type="button" onClick={() => { this.decreaseQty() }} disabled={this.state.inCart || this.state.qty <= 0}>&minus;</button>
                                                     </div>
-                                                    <input type="text" className="form-control text-center" value={this.state.qty} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" onChange={()=>{}}/>
+                                                    <input type="text" className="form-control text-center" value={this.state.qty} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" onChange={() => { }} />
                                                     <div className="input-group-append">
                                                         <button
                                                             className="btn btn-outline-primary js-btn-plus" type="button" disabled={this.state.inCart}
@@ -113,28 +113,25 @@ class ProductDetails extends Component {
                                                 </div>
 
                                             </div>
-                                            <p> The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href,
-                                                but still need the element to resemble a link, use a button and change it with appropriate styles</p>
 
-
-                                                <div className="text-center">
-                                                    {
-                                                        this.state.product.isAvailable ?  (
-                                                            <button className="btn btn-primary" onClick={this.checkCartIsEmpty() ? this.onAddToCart : this.onUpdateCart} disabled={this.addedToCart()}>
-                                                                {
-                                                                    this.addedToCart() ? ' ADDED TO CART ' : 'ADD TO CART'
-                                                                }
-                                                            </button>
-                                                        ):(
+                                            <div className="text-center">
+                                                {
+                                                    this.state.product.isAvailable ? (
+                                                        <button className="btn btn-primary" onClick={this.checkCartIsEmpty() ? this.onAddToCart : this.onUpdateCart} disabled={this.addedToCart()}>
+                                                            {
+                                                                this.addedToCart() ? ' ADDED TO CART ' : 'ADD TO CART'
+                                                            }
+                                                        </button>
+                                                    ) : (
                                                             <button className="btn btn-warning">
                                                                 {
                                                                     'OUT OF STOCK '
                                                                 }
                                                             </button>
                                                         )
-                                                    }
+                                                }
 
-                                                </div>
+                                            </div>
 
                                         </div>
                                     )

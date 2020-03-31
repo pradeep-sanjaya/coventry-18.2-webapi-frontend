@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { config } from '../config/config';
 
 function getAccesstoken() {
     return localStorage.getItem('accessToken');
 }
 
 const axiosInstance = axios.create({
-    baseURL: "https://webapi-backend.herokuapp.com/api/v1"
+    baseURL: config.API_BASE_URL
 });
 
 axiosInstance.defaults.headers.post['responseType'] = 'json';

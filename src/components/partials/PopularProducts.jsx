@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import axiosInstance from '../../helpers/axios';
+import { config } from '../../config/config';
+import { decodeUrl } from "../../helpers/url-parser";
+
 
 class PopularProducts extends Component {
+
+    state = {
+        products: [
+        ]
+    };
 
     render() {
         return (
@@ -13,57 +22,42 @@ class PopularProducts extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/1`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_1.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title">
-                                <Link to={`/product/1`}>LONG SLEEVE SHIRT WITH EMBShop Now</Link>
-                            </h2>
-                            <strong className="item-price">LKR 3,390.00</strong>
-                        </div>
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/2`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_2.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title"><Link to={`/product/2`}>BEAT THE HEAT PANT</Link></h2>
-                            <strong className="item-price">LKR 3,450.00</strong>
-                        </div>
 
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/3`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_3.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title"><Link to={`/product/3`}>BUCKLE DETAILED LINEN PANT</Link></h2>
-                            <strong className="item-price">LKR 3,490.00</strong>
-                        </div>
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/4`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_4.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title"><Link to={`/product/4`}>VNECK SHIFT LINEN DRESS</Link></h2>
-                            <strong className="item-price">LKR 3,675.00</strong>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/5`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_5.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title"><Link to={`/product/5`}>RIB TUBE TOP</Link></h2>
-                            <strong className="item-price">LKR 2,075.00</strong>
-                        </div>
-                        <div className="col-lg-4 col-md-6 item-entry mb-4">
-                            <Link to={`/product/6`} className="product-item md-height bg-gray d-block">
-                                <img src="images/prod_6.jpg" alt="" className="img-fluid" />
-                            </Link>
-                            <h2 className="item-title"><Link to={`/product/6`}>IN HER POWER</Link></h2>
-                            <strong className="item-price">LKR 3,350.00</strong>
-                        </div>
+                        {
+                            this.state.products.map((product, key) => {
+                                return (
+                                    <div className="col-lg-4 col-md-6 item-entry mb-4">
+                                        <Link to={`/product/${product.id}`} className="product-item md-height bg-gray d-block">
+                                            <img src={decodeUrl(product.imageUrl)} alt="" className="img-fluid" />
+                                        </Link>
+                                        <h2 className="item-title">
+                                            <Link to={`/product/${product._id}`}>{product.name}</Link>
+                                        </h2>
+                                        <strong className="item-price">LKR {product.price}</strong>
+                                    </div>
+                                );
+                            })
+                        }
 
                     </div>
                 </div>
             </div>
         );
+    }
+
+    async componentDidMount() {
+        let { data } = await axiosInstance.get(config.API_BASE_URL + '/products');
+        let products = data.data.map(product => {
+            return ({
+                id: product._id,
+                name: product.name,
+                imageUrl: product.imageUrl,
+                price: product.price,
+                qty: product.qty
+            });
+        });
+
+        this.setState({ products: products });
     }
 }
 
