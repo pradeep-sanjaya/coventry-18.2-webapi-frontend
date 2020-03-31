@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axiosInstance from '../../helpers/axios';
-import { config } from '../../config/config'
+import { config } from '../../config/config';
 import Category from '../categories/CategoryDetails';
 
 class Collections extends Component {
@@ -58,7 +58,6 @@ class Collections extends Component {
             this.setState({ firstCategory: firstCategory, categories: otherCategories });
         }
 
-        console.log(this.state);
     }
 }
 
