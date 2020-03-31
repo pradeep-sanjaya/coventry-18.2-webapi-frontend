@@ -61,7 +61,8 @@ function getPopular() {
         }
     };
 };
-function addItemToCart(product) {
+function addItemToCart(product,qty=1) {
+    console.log(qty)
     return async (dispatch) => {
         try {
             axiosInstance.post("/cart/products", {
@@ -69,7 +70,7 @@ function addItemToCart(product) {
                 "selected": [
                     {
                         "productId": product._id,
-                        "selectedQty": 1
+                        "selectedQty": qty
                     }
                 ]
             }).then(
@@ -95,13 +96,15 @@ function addItemToCart(product) {
 
                     }
                 }
-            );
+            ).catch((error) => {
+                dispatch(errorMessage(error.response.data.error.message,false))
+            });
         } catch (err) {
 
         }
     };
 };
-function updateCart(product, cart) {
+function updateCart(product, cart,qty=1) {
     return async (dispatch) => {
         try {
             let itemsAdded = [];
@@ -113,7 +116,7 @@ function updateCart(product, cart) {
             });
             itemsAdded.push({
                 "productId": product._id,
-                "selectedQty": 1
+                "selectedQty": qty
             });
             axiosInstance.put("/cart/products/" + JSON.parse(localStorage.getItem('user')).userId ?? null, {
                 "userId": JSON.parse(localStorage.getItem('user')).userId ?? null,
@@ -142,7 +145,9 @@ function updateCart(product, cart) {
                         dispatch(addToCart(productNew));
                     }
                 }
-            );
+            ).catch((error) => {
+                dispatch(errorMessage(error.response.data.error.message,false))
+            });
         } catch (err) {
             console.log(err)
         }
@@ -270,7 +275,7 @@ function getUserCart() {
                         })
                     }
                 }
-            );
+            )
         } catch (err) {
             dispatch(loading(false));
         }
@@ -292,11 +297,17 @@ function placeOrder({paymentType,street,district,zipCode}) {
                     if (data.data.data) {
 
                         dispatch(updateCartTotal(0));
+
+                        dispatch(errorMessage("Order placed successfully.",true));
+
                         window.location.href = "/"
 
                     }
                 }
-            );
+            ).catch((error) => {
+                dispatch(loading(false));
+                dispatch(errorMessage(error.response.data.error.message,false))
+            });
         } catch (err) {
 
         }
@@ -317,9 +328,12 @@ function addDiscountToCart(coupon){
                         dispatch(updateCartTotal(netTotalPrice));
                     }
                     dispatch(loading(false));
-                    dispatch(errorMessage("Coupon added."))
+                    dispatch(errorMessage(`Coupon added. Rs.${parseFloat(data.data.data.discountsDeducted).toFixed(2)} deducted from your total value.`,true))
                 }
-            );
+            ).catch((error) => {
+                dispatch(loading(false));
+                dispatch(errorMessage(error.response.data.error.message,false))
+            })
         } catch (err) {
             console.log(err)
             dispatch(loading(false));

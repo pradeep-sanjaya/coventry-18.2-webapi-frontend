@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axiosInstance from '../helpers/axios';
 import { decodeUrl } from "../helpers/url-parser";
 import Loading from "./spinners/Loading";
+import {productService} from "../services";
 
 class ProductDetails extends Component {
 
@@ -11,10 +12,34 @@ class ProductDetails extends Component {
         this.state ={
             product:{},
             inCart:false,
-            loading:false
+            loading:false,
+            qty:1
         }
+        this. increaseQty=this.increaseQty.bind(this);
+
+        this.decreaseQty=this.decreaseQty.bind(this);
+
+        this.onAddToCart = this.onAddToCart.bind(this);
+
+        this.onUpdateCart = this.onUpdateCart.bind(this);
+
+
+    }
+    onAddToCart() {
+        this.props.onAddToCart(this.state.product,this.state.qty);
+    }
+    onUpdateCart() {
+        this.props.onUpdateCart(this.state.product, this.props.cart,this.state.qty);
+    }
+    addedToCart() {
+        return this.props.cart.filter((item) => {
+            return this.state.product._id === item.productId
+        }).length > 0;
     }
 
+    checkCartIsEmpty() {
+        return this.props.cart.length === 0;
+    }
      async componentDidMount() {
         const { id } = this.props.match.params;
          this.setState({
@@ -26,7 +51,7 @@ class ProductDetails extends Component {
                loading:false
            })
             let item =  this.props.cart.filter((item)=>{
-                return item._id === this.state.product._id
+                return item.productId === this.state.product._id
             }).length > 0;
 
             if(item) {
@@ -40,9 +65,18 @@ class ProductDetails extends Component {
                 loading:false
             })
         });
-
-
-
+    }
+    increaseQty(){
+        let newQty = this.state.qty+1;
+        this.setState({
+            qty:newQty
+        })
+    }
+    decreaseQty(){
+        let newQty = this.state.qty-1;
+        this.setState({
+            qty:newQty
+        })
     }
     render() {
 
@@ -68,27 +102,40 @@ class ProductDetails extends Component {
                                             <div className="mb-5">
                                                 <div className="input-group mb-3" style={{ maxWidth: "120px" }}>
                                                     <div className="input-group-prepend">
-                                                        <button className="btn btn-outline-primary js-btn-minus" type="button" onClick={() => { }}>&minus;</button>
+                                                        <button className="btn btn-outline-primary js-btn-minus" type="button" onClick={() => { this.decreaseQty()}} disabled={this.state.inCart || this.state.qty<=0}>&minus;</button>
                                                     </div>
-                                                    <input type="text" className="form-control text-center" value={this.state.qty} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                                    <input type="text" className="form-control text-center" value={this.state.qty} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" onChange={()=>{}}/>
                                                     <div className="input-group-append">
                                                         <button
-                                                            className="btn btn-outline-primary js-btn-plus" type="button"
-                                                            onClick={() => {  }}>+</button>
+                                                            className="btn btn-outline-primary js-btn-plus" type="button" disabled={this.state.inCart}
+                                                            onClick={() => { this.increaseQty() }}>+</button>
                                                     </div>
                                                 </div>
 
                                             </div>
                                             <p> The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href,
                                                 but still need the element to resemble a link, use a button and change it with appropriate styles</p>
-                                            <p>
 
-                                                <button className="buy-now btn btn-sm height-auto px-4 py-3 btn-primary" onClick={null} disabled={false}>
+
+                                                <div className="text-center">
                                                     {
-                                                      this.state.inCart ? 'ADDED TO CART' : 'ADD TO CART'
+                                                        this.state.product.isAvailable ?  (
+                                                            <button className="btn btn-primary" onClick={this.checkCartIsEmpty() ? this.onAddToCart : this.onUpdateCart} disabled={this.addedToCart()}>
+                                                                {
+                                                                    this.addedToCart() ? ' ADDED TO CART ' : 'ADD TO CART'
+                                                                }
+                                                            </button>
+                                                        ):(
+                                                            <button className="btn btn-warning">
+                                                                {
+                                                                    'OUT OF STOCK '
+                                                                }
+                                                            </button>
+                                                        )
                                                     }
-                                                </button>
-                                            </p>
+
+                                                </div>
+
                                         </div>
                                     )
                                 }
@@ -108,6 +155,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    onAddToCart: productService.addItemToCart,
+    onUpdateCart: productService.updateCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

@@ -13,7 +13,7 @@ class ProductsGridItem extends Component {
     }
 
     onAddToCart() {
-        this.props.onAddToCart(this.props.product);
+       this.props.onAddToCart(this.props.product);
     }
 
     onUpdateCart() {
@@ -44,12 +44,23 @@ class ProductsGridItem extends Component {
                 <h2 className="item-title"><Link to={`/product/${this.props.product._id}`}>{this.props.product.name}</Link></h2>
                 <strong className="item-price">LKR {this.props.product.price}.00</strong>
                 <div className="text-center">
-                    <button className="btn btn-primary" onClick={this.checkCartIsEmpty() ? this.onAddToCart : this.onUpdateCart} disabled={this.addedToCart()}>
-                        {
-                            this.addedToCart() ? ' ADDED TO CART ' : 'ADD TO CART'
-                        }
-                    </button>
-                </div>
+                {
+                    this.props.product.isAvailable ?  (
+                        <button className="btn btn-primary" onClick={this.checkCartIsEmpty() ? this.onAddToCart : this.onUpdateCart} disabled={this.addedToCart()}>
+                            {
+                                this.addedToCart() ? ' ADDED TO CART ' : 'ADD TO CART'
+                            }
+                        </button>
+                    ):(
+                        <button className="btn btn-warning">
+                            {
+                                'OUT OF STOCK '
+                            }
+                        </button>
+                    )
+                }
+
+            </div>
             </div >
         );
     }

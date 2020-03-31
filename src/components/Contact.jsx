@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import MapContainer from "./Map";
 
 class Contact extends Component {
     render() {
@@ -89,7 +90,7 @@ class Contact extends Component {
                                         Colombo 7<br />
                                         Sri Lanka
                                     </p>
-                                </div>
+                                </div><MapContainer/>
                             </div>
                         </div>
                     </div>

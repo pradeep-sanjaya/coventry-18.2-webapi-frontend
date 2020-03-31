@@ -9,7 +9,12 @@ export const authService = {
     registerUser,
     logoutUser
 };
-
+function setAxiosHeadersAfterLogin(){
+    axiosInstance.defaults.headers.post['responseType'] = 'json';
+    axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+    axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+}
 function loginUser({ email, password }) {
     return async (dispatch) => {
         dispatch(loading(true));
@@ -27,11 +32,12 @@ function loginUser({ email, password }) {
                         localStorage.setItem('user', JSON.stringify({ name: firstName + " " + lastName, userId: _id }));
                     }
                     history.push('/products');
+                    setAxiosHeadersAfterLogin();
                     dispatch(userActions.login({ user: { name } }));
                 }
             ).catch((error) => {
                 dispatch(loading(false));
-                dispatch(errorMessage(error.response.data.error.message))
+                dispatch(errorMessage(error.response.data.error.message,false))
             })
         } catch (err) {
 
@@ -58,7 +64,7 @@ function registerUser({ email, password, gender, firstName, lastName }) {
                 }
             ).catch((error) => {
                 dispatch(loading(false));
-                dispatch(errorMessage(error.response.data.error.message))
+                dispatch(errorMessage(error.response.data.error.message,false))
             })
         } catch (err) {
             dispatch(loading(false));

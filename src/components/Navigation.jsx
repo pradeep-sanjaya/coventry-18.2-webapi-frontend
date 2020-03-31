@@ -93,12 +93,12 @@ class Navigation extends Component {
                     </div>
                 </div>
                 {
-                    this.props.error ?
+                    this.props.error &&   this.props.error.message!=null ?
                         <SweetAlert
                             show={true}
                             title="Alert"
-                            type="error"
-                            text={this.props.error}
+                            type={this.props.error.type ? 'success' :'error'}
+                            text={this.props.error.message}
                             onConfirm={this.props.resetErrorMessage}
                         /> : null
 

@@ -1,8 +1,8 @@
 export const ERROR = 'ERROR';
 
-export default function errorMessage(message) {
+export default function errorMessage(message,type) {
     return {
         type: ERROR,
-        payload:message
+        payload:{message,type}
     }
 }

@@ -24,6 +24,9 @@ class Cart extends Component {
     addDiscountToCart(){
         const { coupon } = this.state;
         this.props.addDiscountToCart(coupon);
+        this.setState({
+            coupon:''
+        })
     }
     render() {
         return (
@@ -45,7 +48,7 @@ class Cart extends Component {
                    <div className="col-md-6">
                        {this.props.cart.length>0 ?
                            <div className="p-3 p-lg-5 border">
-                               {<h1>Cart Total : Rs. {parseFloat(this.props.cartTotal).toFixed(2)}</h1>}
+                               {<h1>Cart Total : Rs. { (this.props.cartTotal).toFixed(2)}</h1>}
                                <div className="form-group row">
                                    <div className="col-md-8">
                                        <label htmlFor="coupon" className="text-black">Coupon Code <span className="text-success">*</span></label>
