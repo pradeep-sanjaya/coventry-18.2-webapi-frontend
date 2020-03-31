@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 class TopBanner extends Component {
 
     render() {
+        const productId = '5e7cdc94b6bb2f007656f8c8';
 
-        const productId = 1;
         return (
             <div className="site-blocks-cover" data-aos="fade">
                 <div className="container">
