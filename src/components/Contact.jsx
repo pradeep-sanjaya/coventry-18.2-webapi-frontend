@@ -90,7 +90,9 @@ class Contact extends Component {
                                         Colombo 7<br />
                                         Sri Lanka
                                     </p>
-                                </div><MapContainer/>
+                                </div>
+
+                                <MapContainer />
                             </div>
                         </div>
                     </div>
